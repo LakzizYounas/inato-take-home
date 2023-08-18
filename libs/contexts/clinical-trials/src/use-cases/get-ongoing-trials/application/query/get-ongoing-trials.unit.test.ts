@@ -10,6 +10,7 @@ import { GetOngoingTrialsHandler } from './get-ongoing-trials.handler';
 import { GetOngoingTrialsQuery } from './get-ongoing-trials.query';
 
 describe('Get Ongoing Trials', () => {
+  const today = new Date('2024-07-17');
   let gateway: GetOngoingTrialsInMemoryGateway;
   let dateProvider: DateProviderInMemory;
 
@@ -19,24 +20,24 @@ describe('Get Ongoing Trials', () => {
   });
 
   test('Every ongoing trials', async () => {
-    const pastTrial = new TrialBuilder()
-      .sponsoredBy('Sanofi')
-      .starts('2018-06-13')
-      .ends('2023-07-17')
+    const pastTrial = new TrialBuilder().sponsoredBy('Sanofi').past(today).build();
+    const notStartedTrial = new TrialBuilder()
+      .sponsoredBy('Roche')
+      .notStarted(today)
       .build();
     const canceledTrial = new TrialBuilder()
       .sponsoredBy('Bayer')
-      .starts('2018-06-13')
-      .ends('2030-07-17')
+      .inProgress(today)
       .canceled()
       .build();
     const ongoingTrial = new TrialBuilder()
       .sponsoredBy('AstraZeneca')
-      .starts('2022-06-15')
-      .ends('2030-12-24')
+      .inProgress(today)
       .build();
-    gateway.setNextTrials(TrialCollection.from([pastTrial, canceledTrial, ongoingTrial]));
-    dateProvider.setDateOfNow(new Date('2024-07-17'));
+    gateway.setNextTrials(
+      TrialCollection.from([pastTrial, notStartedTrial, canceledTrial, ongoingTrial]),
+    );
+    dateProvider.setDateOfNow(today);
 
     const filter = { sponsor: undefined };
     const ongoingTrials = await getOngoingTrialsMapped(filter, sponsorTrialMapper);
@@ -44,16 +45,14 @@ describe('Get Ongoing Trials', () => {
     expect(ongoingTrials).toEqual([{ sponsor: ongoingTrial.sponsor.toString() }]);
   });
 
-  test('Sponsor ongoing trials', async () => {
+  test('Sponsor filtred ongoing trials', async () => {
     const sanofiTrial = new TrialBuilder()
       .sponsoredBy('Sanofi')
-      .starts('2018-06-13')
-      .ends('2030-07-17')
+      .inProgress(today)
       .build();
     const astraZenecaTrial = new TrialBuilder()
       .sponsoredBy('AstraZeneca')
-      .starts('2022-06-15')
-      .ends('2030-12-24')
+      .inProgress(today)
       .build();
     gateway.setNextTrials(TrialCollection.from([sanofiTrial, astraZenecaTrial]));
     dateProvider.setDateOfNow(new Date('2024-07-17'));

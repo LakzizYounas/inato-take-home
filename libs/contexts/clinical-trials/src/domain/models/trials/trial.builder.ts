@@ -15,14 +15,28 @@ export class TrialBuilder {
     return this;
   }
 
-  public starts(startDate: string) {
-    this.startDate = startDate;
+  past(today: Date) {
+    this.startDate = this.datePlusDays(today, -10);
+    this.endDate = this.datePlusDays(today, -5);
     return this;
   }
 
-  public ends(endDate: string) {
-    this.endDate = endDate;
+  inProgress(today: Date) {
+    this.startDate = this.datePlusDays(today, -10);
+    this.endDate = this.datePlusDays(today, 10);
     return this;
+  }
+
+  notStarted(today: Date) {
+    this.startDate = this.datePlusDays(today, 5);
+    this.endDate = this.datePlusDays(today, 10);
+    return this;
+  }
+
+  private datePlusDays(date: Date, days: number) {
+    const newDate = new Date(date);
+    newDate.setDate(date.getDate() + days);
+    return newDate.toISOString().split('T')[0];
   }
 
   public canceled() {
