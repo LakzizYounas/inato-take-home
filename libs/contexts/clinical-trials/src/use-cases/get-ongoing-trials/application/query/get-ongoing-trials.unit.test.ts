@@ -19,34 +19,60 @@ describe('Get Ongoing Trials', () => {
   });
 
   test('Every ongoing trials', async () => {
-    gateway.setNextOngoingTrials(
-      TrialCollection.from([
-        new TrialBuilder()
-          .withSponsor('Sanofi')
-          .withStartDate('2018-06-13')
-          .withEndDate('2023-07-17')
-          .build(),
-        new TrialBuilder()
-          .withSponsor('AstraZeneca')
-          .withStartDate('2022-06-15')
-          .withEndDate('2030-12-24')
-          .build(),
-      ]),
-    );
+    const pastTrial = new TrialBuilder()
+      .sponsoredBy('Sanofi')
+      .starts('2018-06-13')
+      .ends('2023-07-17')
+      .build();
+    const canceledTrial = new TrialBuilder()
+      .sponsoredBy('Bayer')
+      .starts('2018-06-13')
+      .ends('2030-07-17')
+      .canceled()
+      .build();
+    const ongoingTrial = new TrialBuilder()
+      .sponsoredBy('AstraZeneca')
+      .starts('2022-06-15')
+      .ends('2030-12-24')
+      .build();
+    gateway.setNextTrials(TrialCollection.from([pastTrial, canceledTrial, ongoingTrial]));
     dateProvider.setDateOfNow(new Date('2024-07-17'));
 
-    const ongoingTrials = await getOngoingTrialsMapped(sponsorTrialMapper);
+    const filter = { sponsor: undefined };
+    const ongoingTrials = await getOngoingTrialsMapped(filter, sponsorTrialMapper);
 
-    expect(ongoingTrials).toEqual([{ sponsor: 'AstraZeneca' }]);
+    expect(ongoingTrials).toEqual([{ sponsor: ongoingTrial.sponsor.toString() }]);
   });
 
-  test.todo('Sponsor ongoing trials');
+  test('Sponsor ongoing trials', async () => {
+    const sanofiTrial = new TrialBuilder()
+      .sponsoredBy('Sanofi')
+      .starts('2018-06-13')
+      .ends('2030-07-17')
+      .build();
+    const astraZenecaTrial = new TrialBuilder()
+      .sponsoredBy('AstraZeneca')
+      .starts('2022-06-15')
+      .ends('2030-12-24')
+      .build();
+    gateway.setNextTrials(TrialCollection.from([sanofiTrial, astraZenecaTrial]));
+    dateProvider.setDateOfNow(new Date('2024-07-17'));
+
+    const filter = { sponsor: 'astraZeneca' };
+    const ongoingTrials = await getOngoingTrialsMapped(filter, sponsorTrialMapper);
+
+    expect(ongoingTrials).toEqual([{ sponsor: astraZenecaTrial.sponsor.toString() }]);
+  });
+
   test.todo('Country ongoing trials');
   test.todo('Sponsor & country ongoing trials');
   test.todo('errors handling');
 
-  async function getOngoingTrialsMapped(mapper: TrialMapper<unknown>) {
-    const query = new GetOngoingTrialsQuery(mapper);
+  async function getOngoingTrialsMapped(
+    filter: { sponsor: string | undefined },
+    mapper: TrialMapper<unknown>,
+  ) {
+    const query = new GetOngoingTrialsQuery(filter, mapper);
     const handler = new GetOngoingTrialsHandler(gateway, dateProvider);
     const ongoingTrials = await handler.execute(query);
     return ongoingTrials;
@@ -54,5 +80,5 @@ describe('Get Ongoing Trials', () => {
 });
 
 function sponsorTrialMapper(trial: Trial) {
-  return { sponsor: trial.sponsor };
+  return { sponsor: trial.sponsor.toString() };
 }

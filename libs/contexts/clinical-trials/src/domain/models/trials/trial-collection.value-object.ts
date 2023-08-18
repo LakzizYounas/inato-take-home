@@ -1,19 +1,26 @@
 import { List } from 'immutable';
 
+import { Sponsor } from '../sponsors/sponsor.value-object';
 import { TrialMapper } from './trial-mapper.type';
-import { Trial, TrialProps } from './trial.value-object';
+import { Trial } from './trial.value-object';
 
 export class TrialCollection {
   private constructor(private readonly trials: List<Trial>) {}
 
-  public static from(trials: TrialProps[]) {
-    return new TrialCollection(List(trials.map(Trial.from)));
+  public static from(trials: Trial[]) {
+    return new TrialCollection(List(trials));
   }
 
   public ongoing(now: Date) {
-    const ongoingList = this.trials.filter(
-      (trial) => new Date(trial.startDate) < now && new Date(trial.endDate) > now,
-    );
+    const ongoingList = this.trials.filter((trial) => trial.isOngoing(now));
+    return new TrialCollection(ongoingList);
+  }
+
+  public fromSponsor(sponsor: Sponsor | undefined) {
+    if (sponsor === undefined) {
+      return this;
+    }
+    const ongoingList = this.trials.filter((trial) => trial.sponsor.is(sponsor));
     return new TrialCollection(ongoingList);
   }
 

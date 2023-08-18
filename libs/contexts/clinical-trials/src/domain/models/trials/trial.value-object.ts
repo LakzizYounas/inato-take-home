@@ -1,13 +1,15 @@
+import { Sponsor } from '../sponsors/sponsor.value-object';
+
 export class Trial {
   private constructor(
     readonly name: string,
     readonly country: string,
     readonly startDate: string,
     readonly endDate: string,
-    readonly sponsor: string,
+    readonly sponsor: Sponsor,
     readonly canceled: boolean,
     readonly studyType: string,
-    readonly primaryPurpose: string
+    readonly primaryPurpose: string,
   ) {}
 
   static from(props: TrialProps) {
@@ -16,15 +18,23 @@ export class Trial {
       props.country,
       props.start_date,
       props.end_date,
-      props.sponsor,
+      Sponsor.from(props.sponsor),
       props.canceled,
       props.study_type,
-      props.primary_purpose
+      props.primary_purpose,
+    );
+  }
+
+  isOngoing(now: Date) {
+    return (
+      this.canceled === false &&
+      new Date(this.startDate) < now &&
+      new Date(this.endDate) > now
     );
   }
 }
 
-export type TrialProps = {
+type TrialProps = {
   name: string;
   country: string;
   start_date: string;
