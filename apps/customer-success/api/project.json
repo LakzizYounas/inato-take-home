@@ -1,7 +1,7 @@
 {
-  "name": "cs-api",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/cs-api/src",
+  "name": "customer-success-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/customer-success/api/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,12 +10,11 @@
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/cs-api",
+        "outputPath": "dist/apps/customer-success/api",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/cs-api/src/main.ts",
-        "tsConfig": "apps/cs-api/tsconfig.app.json",
-        "assets": ["apps/cs-api/src/assets"],
+        "main": "apps/customer-success/api/src/main.ts",
+        "tsConfig": "apps/customer-success/api/tsconfig.app.json",
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -40,14 +39,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "cs-api:build"
+        "buildTarget": "customer-success-api:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "cs-api:build:development"
+          "buildTarget": "customer-success-api:build:development"
         },
         "production": {
-          "buildTarget": "cs-api:build:production"
+          "buildTarget": "customer-success-api:build:production"
         }
       }
     },
@@ -55,20 +54,17 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/cs-api/**/*.ts"]
+        "lintFilePatterns": ["apps/customer-success/api/**/*.ts"]
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "apps/cs-api/jest.config.ts",
-        "passWithNoTests": true
+        "config": "apps/customer-success/api/vitest.config.ts"
       },
       "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
+        "watch": {
+          "watch": true
         }
       }
     }
