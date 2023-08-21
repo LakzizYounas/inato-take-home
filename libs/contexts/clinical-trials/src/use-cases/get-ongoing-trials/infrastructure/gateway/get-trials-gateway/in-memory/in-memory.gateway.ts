@@ -1,7 +1,7 @@
-import { TrialCollection } from '../../../../../domain/models/trials/trial-collection.value-object';
-import { GetTrialsGateway } from '../../../application/gateway/get-trials.gateway';
+import { TrialCollection } from '../../../../../../domain/models/trials/trial-collection.value-object';
+import { GetTrialsGateway } from '../../../../application/gateway/get-trials.gateway';
 
-export class GetOngoingTrialsInMemoryGateway implements GetTrialsGateway {
+export class GetTrialsInMemoryGateway implements GetTrialsGateway {
   private nextTrialCollection!: TrialCollection;
 
   public setNextTrials(trialCollection: TrialCollection) {
