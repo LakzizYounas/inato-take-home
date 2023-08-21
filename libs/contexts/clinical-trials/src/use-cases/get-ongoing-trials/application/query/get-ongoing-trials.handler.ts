@@ -1,18 +1,17 @@
 import { DateProvider } from '../gateway/date-provider.gateway';
 import { GetTrialsGateway } from '../gateway/get-trials.gateway';
+import { IGetOngoingTrialsHandler } from './get-ongoing-trials.handler.interface';
 import { GetOngoingTrialsQuery } from './get-ongoing-trials.query';
 
-export class GetOngoingTrialsHandler<MappedTrial> {
-  public constructor(
+export class GetOngoingTrialsHandler<MappedTrial>
+  implements IGetOngoingTrialsHandler<MappedTrial>
+{
+  constructor(
     private readonly getTrialsGateway: GetTrialsGateway,
     private readonly dateProvider: DateProvider,
   ) {}
 
-  async execute({
-    sponsor,
-    country,
-    mapper,
-  }: GetOngoingTrialsQuery<MappedTrial>): Promise<MappedTrial[]> {
+  async execute({ sponsor, country, mapper }: GetOngoingTrialsQuery<MappedTrial>) {
     const trials = await this.getTrialsGateway.execute();
     const now = this.dateProvider.now();
     return trials.ongoing(now).fromSponsor(sponsor).fromCountry(country).map(mapper);
