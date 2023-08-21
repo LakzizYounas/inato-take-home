@@ -1,4 +1,4 @@
-import { DateProvider } from "../../../application/gateway/date-provider.gateway";
+import { DateProvider } from '../../../../application/gateway/date-provider.gateway';
 
 export class DateProviderInMemory implements DateProvider {
   private dateOfNow!: Date;
