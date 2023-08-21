@@ -10,10 +10,11 @@ export class GetOngoingTrialsHandler<MappedTrial> {
 
   async execute({
     sponsor,
+    country,
     mapper,
   }: GetOngoingTrialsQuery<MappedTrial>): Promise<MappedTrial[]> {
     const trials = await this.getTrialsGateway.execute();
     const now = this.dateProvider.now();
-    return trials.ongoing(now).fromSponsor(sponsor).map(mapper);
+    return trials.ongoing(now).fromSponsor(sponsor).fromCountry(country).map(mapper);
   }
 }

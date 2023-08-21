@@ -1,9 +1,10 @@
+import { Country } from '../country/country.value-object';
 import { Sponsor } from '../sponsors/sponsor.value-object';
 
 export class Trial {
   private constructor(
     readonly name: string,
-    readonly country: string,
+    readonly country: Country,
     readonly startDate: string,
     readonly endDate: string,
     readonly sponsor: Sponsor,
@@ -15,7 +16,7 @@ export class Trial {
   static from(props: TrialProps) {
     return new Trial(
       props.name,
-      props.country,
+      Country.fromCode(props.country),
       props.start_date,
       props.end_date,
       Sponsor.from(props.sponsor),

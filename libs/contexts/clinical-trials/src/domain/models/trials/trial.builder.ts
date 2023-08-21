@@ -1,3 +1,4 @@
+import { Country } from '../country/country.value-object';
 import { Trial } from './trial.value-object';
 
 export class TrialBuilder {
