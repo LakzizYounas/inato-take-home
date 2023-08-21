@@ -1,4 +1,4 @@
-import countryByCode from './country-by-code.json';
+import { countryByCode } from './country-by-code';
 
 export class Country {
   private constructor(private readonly code: string, private readonly name: string) {}

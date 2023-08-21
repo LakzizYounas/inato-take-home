@@ -4,18 +4,18 @@ import { TrialCollection } from '../../../../domain/models/trials/trial-collecti
 import { TrialMapper } from '../../../../domain/models/trials/trial-mapper.type';
 import { TrialBuilder } from '../../../../domain/models/trials/trial.builder';
 import { Trial } from '../../../../domain/models/trials/trial.value-object';
-import { DateProviderInMemory } from '../../infrastructure/gateway/date-provider/in-memory.gateway';
-import { GetOngoingTrialsInMemoryGateway } from '../../infrastructure/gateway/get-ongoing-trial-gateway/in-memory.gateway';
+import { DateProviderInMemory } from '../../infrastructure/gateway/date-provider/in-memory/in-memory.gateway';
+import { GetTrialsInMemoryGateway } from '../../infrastructure/gateway/get-trials-gateway/in-memory/in-memory.gateway';
 import { GetOngoingTrialsHandler } from './get-ongoing-trials.handler';
 import { GetOngoingTrialsQuery } from './get-ongoing-trials.query';
 
 describe('Get Ongoing Trials', () => {
   const today = new Date('2024-07-17');
-  let gateway: GetOngoingTrialsInMemoryGateway;
+  let gateway: GetTrialsInMemoryGateway;
   let dateProvider: DateProviderInMemory;
 
   beforeEach(() => {
-    gateway = new GetOngoingTrialsInMemoryGateway();
+    gateway = new GetTrialsInMemoryGateway();
     dateProvider = new DateProviderInMemory();
   });
 

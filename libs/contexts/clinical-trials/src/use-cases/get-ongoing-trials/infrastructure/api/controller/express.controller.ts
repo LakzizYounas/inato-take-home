@@ -27,4 +27,4 @@ export function makeGetOngoingTrialsRouter<MappedTrial>(
   return { getOngoingTrialsRouter };
 }
 
-type ReqBody = { sponsor: string; country: 'string' };
+type ReqBody = { sponsor?: string; country?: string };
