@@ -12,7 +12,7 @@ npm i
 ### API
 
 ```
-nx serve customer-success-api
+npx nx serve customer-success-api
 ```
 You can now get the ongoing trials running:
 ```
@@ -23,13 +23,13 @@ curl localhost:8080/clinical-trials/ongoing?country=FR&sponsor=sanofi
 ### CLI
 
 ```
-nx execute customer-success-cli --country=FR
+npx nx execute customer-success-cli --country=FR
 ```
 
 ### Tests
 
 ```
-nx test clinical-trials
+npx nx test clinical-trials
 ```
 
 # Code Discover Advice
@@ -45,8 +45,8 @@ The easiest way to review the code is probably to start with `libs/contexts/clin
 ## Nx monorepo
 
 - Keep a good separation of concerns by segragating the bounded contexts into the `libs` and the applications into the `apps`.
-- Good reusability of the code thanks to the libraries eg: the `clinical-trials` lib is used by the 2 applications.
-- Good developer experience thanks to the NX features like caches, runs only modified code...
+- Reusability of the code thanks to the libraries eg: the `clinical-trials` lib is used by the 2 applications.
+- Developer experience thanks to the NX features like caches, runs only modified code...
 
 
 ## Clean Architecture
