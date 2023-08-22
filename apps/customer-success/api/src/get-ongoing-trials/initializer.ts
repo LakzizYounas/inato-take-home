@@ -2,19 +2,20 @@ import {
   GetOngoingTrialsHandler,
   GetTrialsFileGateway,
   RealDateProvider,
-  makeGetOngoingTrialsRouter,
-  nameSponsorDurationTrialMapper,
+  makeGetOngoingTrialsExpressRouter,
+  nameSponsorDurationJsonTrialMapper,
 } from '@inato/contexts/clinical-trials';
 
 export const initOngoingTrialsRouter = () => {
   const filePath = './trials.json';
-  const handler = new GetOngoingTrialsHandler(
-    new GetTrialsFileGateway(filePath),
-    new RealDateProvider(),
-  );
-  const { getOngoingTrialsRouter } = makeGetOngoingTrialsRouter(
+  const getTrialsGateway = new GetTrialsFileGateway(filePath);
+  const dateProvider = new RealDateProvider();
+  const handler = new GetOngoingTrialsHandler(getTrialsGateway, dateProvider);
+
+  const { getOngoingTrialsRouter } = makeGetOngoingTrialsExpressRouter(
     handler,
-    nameSponsorDurationTrialMapper,
+    nameSponsorDurationJsonTrialMapper,
   );
+
   return getOngoingTrialsRouter;
 };

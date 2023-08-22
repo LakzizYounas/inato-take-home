@@ -1,7 +1,7 @@
 import { TrialMapper } from '../../../../domain/models/trials/trial-mapper.type';
 import { Trial } from '../../../../domain/models/trials/trial.value-object';
 
-export const nameSponsorDurationTrialMapper: TrialMapper<MappedTrial> = (
+export const nameSponsorDurationJsonTrialMapper: TrialMapper<MappedTrial> = (
   trial: Trial,
 ) => ({
   name: trial.name,

@@ -7,7 +7,7 @@ import { Sponsor } from '../../../../../domain/models/sponsors/sponsor.value-obj
 import { Trial } from '../../../../../domain/models/trials/trial.value-object';
 import { IGetOngoingTrialsHandler } from '../../../application/query/get-ongoing-trials.handler.interface';
 import { GetOngoingTrialsQuery } from '../../../application/query/get-ongoing-trials.query';
-import { makeGetOngoingTrialsRouter } from './express.controller';
+import { makeGetOngoingTrialsExpressRouter } from './express.controller';
 
 describe('Get Ongoing Trials Express Controller', () => {
   let app: Express;
@@ -18,7 +18,7 @@ describe('Get Ongoing Trials Express Controller', () => {
     app = express();
     handler = new HandlerSpy();
     const mapper = () => mappedResult;
-    const { getOngoingTrialsRouter } = makeGetOngoingTrialsRouter(handler, mapper);
+    const { getOngoingTrialsRouter } = makeGetOngoingTrialsExpressRouter(handler, mapper);
     app.use(getOngoingTrialsRouter);
   });
 

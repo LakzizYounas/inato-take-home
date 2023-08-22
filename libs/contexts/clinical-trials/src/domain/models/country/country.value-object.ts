@@ -11,4 +11,8 @@ export class Country {
   public is(other: Country) {
     return this.code === other.code;
   }
+
+  public asName() {
+    return this.name;
+  }
 }

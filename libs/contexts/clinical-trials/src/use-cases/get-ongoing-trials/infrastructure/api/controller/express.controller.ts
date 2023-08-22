@@ -4,7 +4,7 @@ import { TrialMapper } from '../../../../../domain/models/trials/trial-mapper.ty
 import { IGetOngoingTrialsHandler } from '../../../application/query/get-ongoing-trials.handler.interface';
 import { GetOngoingTrialsQuery } from '../../../application/query/get-ongoing-trials.query';
 
-export function makeGetOngoingTrialsRouter<MappedTrial>(
+export function makeGetOngoingTrialsExpressRouter<MappedTrial>(
   handler: IGetOngoingTrialsHandler<MappedTrial>,
   mapper: TrialMapper<MappedTrial>,
 ) {

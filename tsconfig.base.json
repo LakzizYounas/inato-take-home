@@ -17,9 +17,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "paths": {
-      "@inato/contexts/clinical-trials": [
-        "libs/contexts/clinical-trials/src/index.ts"
-      ]
+      "@inato/contexts/clinical-trials": ["libs/contexts/clinical-trials/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

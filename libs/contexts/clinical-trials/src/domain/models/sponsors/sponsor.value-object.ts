@@ -1,9 +1,5 @@
 export class Sponsor {
-  private readonly name: string;
-
-  private constructor(name: string) {
-    this.name = name;
-  }
+  private constructor(private readonly name: string) {}
 
   static from(name: string) {
     return new Sponsor(name);
