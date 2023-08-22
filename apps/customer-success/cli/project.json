@@ -36,19 +36,11 @@
         }
       }
     },
-    "serve": {
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
+    "execute": {
+      "dependsOn": ["build"],
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "customer-success-cli:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "customer-success-cli:build:development"
-        },
-        "production": {
-          "buildTarget": "customer-success-cli:build:production"
-        }
+        "command": "node dist/apps/customer-success/cli/main.js {args}"
       }
     },
     "lint": {

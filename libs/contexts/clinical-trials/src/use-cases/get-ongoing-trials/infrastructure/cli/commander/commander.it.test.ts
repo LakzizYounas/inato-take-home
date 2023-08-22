@@ -8,7 +8,10 @@ import { makeGetOngoingTrialsCommander } from './commander';
 describe('Get Ongoing Trials Commander', () => {
   let handler: GetOngoingTrials<string>;
   let logger: SpyLogger;
-  const ongoingTrials = ['trial1, country1', 'trial2, country2'];
+  const ongoingTrials = [
+    'Neratinib +/- Fulvestrant in HER2+, ER+ Metastatic Breast Cancer, Germany',
+    'Atezolizumab + Stereotactic Radiation in Triple-negative Breast Cancer and Brain Metastasis, Austria',
+  ];
 
   beforeEach(() => {
     handler = { execute: async () => ongoingTrials };
@@ -16,12 +19,11 @@ describe('Get Ongoing Trials Commander', () => {
   });
 
   test('Should display on stdout the list of ongoing trials', async () => {
-    const command = makeGetOngoingTrialsCommander(
-      handler,
-      nameCountryStringTrialMapper,
-      logger,
-      ['node', 'scriptName', '--country=ES'],
-    );
+    const command = makeGetOngoingTrialsCommander(handler, nameCountryStringTrialMapper, logger, [
+      'node',
+      './scriptName',
+      '--country=ES',
+    ]);
     command();
     await waitCommandExecution();
     expect(logger.logs).toEqual(ongoingTrials);

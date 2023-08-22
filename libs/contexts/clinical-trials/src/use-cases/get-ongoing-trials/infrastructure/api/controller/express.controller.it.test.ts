@@ -25,14 +25,9 @@ describe('Get Ongoing Trials Express Controller', () => {
     const sponsor = 'Sanofi';
     const country = 'FR';
 
-    const res = await request(app)
-      .get('/ongoing')
-      .query({ country, sponsor })
-      .expect(200);
+    const res = await request(app).get('/ongoing').query({ country, sponsor }).expect(200);
 
-    expect(
-      handler.hasBeenCalledWith(Sponsor.from(sponsor), Country.fromCode(country)),
-    ).toBe(true);
+    expect(handler.hasBeenCalledWith(Sponsor.from(sponsor), Country.fromCode(country))).toBe(true);
     expect(res.body).toEqual(handler.returnValue);
   });
 });

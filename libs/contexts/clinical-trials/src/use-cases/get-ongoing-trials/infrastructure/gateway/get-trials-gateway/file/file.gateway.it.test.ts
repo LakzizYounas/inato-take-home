@@ -16,9 +16,7 @@ describe('Get Ongoing Trials File Gateway', () => {
     const gateway = new GetTrialsFileGateway(filePath);
     const trialsCollection = await gateway.execute();
 
-    expect(trialsCollection).toEqual(
-      TrialCollection.from([Trial.from(sanofiTrial), Trial.from(rocheTrial)]),
-    );
+    expect(trialsCollection).toEqual(TrialCollection.from([Trial.from(sanofiTrial), Trial.from(rocheTrial)]));
     await unlink(filePath);
   });
 });

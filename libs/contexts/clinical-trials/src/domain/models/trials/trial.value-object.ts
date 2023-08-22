@@ -27,11 +27,7 @@ export class Trial {
   }
 
   isOngoing(now: Date) {
-    return (
-      this.canceled === false &&
-      new Date(this.startDate) < now &&
-      new Date(this.endDate) > now
-    );
+    return this.canceled === false && new Date(this.startDate) < now && new Date(this.endDate) > now;
   }
 }
 

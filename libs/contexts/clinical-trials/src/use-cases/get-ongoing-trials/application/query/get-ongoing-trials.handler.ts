@@ -3,9 +3,7 @@ import { GetTrialsGateway } from '../gateway/get-trials.gateway';
 import { GetOngoingTrials } from './get-ongoing-trials.interface';
 import { GetOngoingTrialsQuery } from './get-ongoing-trials.query';
 
-export class GetOngoingTrialsHandler<MappedTrial>
-  implements GetOngoingTrials<MappedTrial>
-{
+export class GetOngoingTrialsHandler<MappedTrial> implements GetOngoingTrials<MappedTrial> {
   constructor(
     private readonly getTrialsGateway: GetTrialsGateway,
     private readonly dateProvider: DateProvider,

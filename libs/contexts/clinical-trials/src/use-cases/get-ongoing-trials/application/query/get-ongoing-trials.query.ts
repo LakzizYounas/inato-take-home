@@ -11,10 +11,7 @@ export class GetOngoingTrialsQuery<MappedTrial> {
   public readonly sponsor: Sponsor | undefined;
   public readonly country: Country | undefined;
 
-  constructor(
-    { sponsor, countryCode }: Filter,
-    readonly mapper: TrialMapper<MappedTrial>,
-  ) {
+  constructor({ sponsor, countryCode }: Filter, readonly mapper: TrialMapper<MappedTrial>) {
     this.sponsor = sponsor ? Sponsor.from(sponsor) : undefined;
     this.country = countryCode ? Country.fromCode(countryCode) : undefined;
   }

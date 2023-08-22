@@ -21,22 +21,10 @@ describe('Get Ongoing Trials', () => {
 
   test('Every ongoing trials', async () => {
     const pastTrial = new TrialBuilder().sponsoredBy('Sanofi').past(today).build();
-    const notStartedTrial = new TrialBuilder()
-      .sponsoredBy('Roche')
-      .notStarted(today)
-      .build();
-    const canceledTrial = new TrialBuilder()
-      .sponsoredBy('Bayer')
-      .inProgress(today)
-      .canceled()
-      .build();
-    const ongoingTrial = new TrialBuilder()
-      .sponsoredBy('AstraZeneca')
-      .inProgress(today)
-      .build();
-    gateway.setNextTrials(
-      TrialCollection.from([pastTrial, notStartedTrial, canceledTrial, ongoingTrial]),
-    );
+    const notStartedTrial = new TrialBuilder().sponsoredBy('Roche').notStarted(today).build();
+    const canceledTrial = new TrialBuilder().sponsoredBy('Bayer').inProgress(today).canceled().build();
+    const ongoingTrial = new TrialBuilder().sponsoredBy('AstraZeneca').inProgress(today).build();
+    gateway.setNextTrials(TrialCollection.from([pastTrial, notStartedTrial, canceledTrial, ongoingTrial]));
     dateProvider.setDateOfNow(today);
 
     const filter = {};
@@ -46,14 +34,8 @@ describe('Get Ongoing Trials', () => {
   });
 
   test('Sponsor filtred ongoing trials', async () => {
-    const sanofiTrial = new TrialBuilder()
-      .sponsoredBy('Sanofi')
-      .inProgress(today)
-      .build();
-    const astraZenecaTrial = new TrialBuilder()
-      .sponsoredBy('AstraZeneca')
-      .inProgress(today)
-      .build();
+    const sanofiTrial = new TrialBuilder().sponsoredBy('Sanofi').inProgress(today).build();
+    const astraZenecaTrial = new TrialBuilder().sponsoredBy('AstraZeneca').inProgress(today).build();
     gateway.setNextTrials(TrialCollection.from([sanofiTrial, astraZenecaTrial]));
     dateProvider.setDateOfNow(new Date('2024-07-17'));
 
@@ -64,11 +46,7 @@ describe('Get Ongoing Trials', () => {
   });
 
   test('Country ongoing trials', async () => {
-    const frenchTrial = new TrialBuilder()
-      .sponsoredBy('Sanofi')
-      .fromCountry('FR')
-      .inProgress(today)
-      .build();
+    const frenchTrial = new TrialBuilder().sponsoredBy('Sanofi').fromCountry('FR').inProgress(today).build();
     const italianTrial = new TrialBuilder()
       .sponsoredBy('AstraZeneca')
       .fromCountry('IT')

@@ -10,24 +10,19 @@ export class TrialBuilder {
   private studyType = 'interventional';
   private primaryPurpose = 'treatment';
 
-  public named(name: string) {
-    this.name = name;
-    return this;
-  }
-
-  past(today: Date) {
+  public past(today: Date) {
     this.startDate = this.datePlusDays(today, -10);
     this.endDate = this.datePlusDays(today, -5);
     return this;
   }
 
-  inProgress(today: Date) {
+  public inProgress(today: Date) {
     this.startDate = this.datePlusDays(today, -10);
     this.endDate = this.datePlusDays(today, 10);
     return this;
   }
 
-  notStarted(today: Date) {
+  public notStarted(today: Date) {
     this.startDate = this.datePlusDays(today, 5);
     this.endDate = this.datePlusDays(today, 10);
     return this;
