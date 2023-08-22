@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, test } from 'vitest';
 
-import { IGetOngoingTrialsHandler } from '../../../application/query/get-ongoing-trials.handler.interface';
+import { GetOngoingTrials } from '../../../application/query/get-ongoing-trials.interface';
 import { SpyLogger } from '../../gateway/logger/spy.gateway';
 import { nameCountryStringTrialMapper } from '../../mapper/name-country-string.mapper';
 import { makeGetOngoingTrialsCommander } from './commander';
 
 describe('Get Ongoing Trials Commander', () => {
-  let handler: IGetOngoingTrialsHandler<string>;
+  let handler: GetOngoingTrials<string>;
   let logger: SpyLogger;
   const ongoingTrials = ['trial1, country1', 'trial2, country2'];
 

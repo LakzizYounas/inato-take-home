@@ -83,7 +83,6 @@ describe('Get Ongoing Trials', () => {
     expect(ongoingTrials).toEqual([{ sponsor: italianTrial.sponsor.toString() }]);
   });
 
-  test.todo('Sponsor & country ongoing trials');
   test.todo('errors handling');
 
   async function getOngoingTrialsMapped(

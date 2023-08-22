@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
 
 import { TrialMapper } from '../../../../../domain/models/trials/trial-mapper.type';
-import { IGetOngoingTrialsHandler } from '../../../application/query/get-ongoing-trials.handler.interface';
+import { GetOngoingTrials } from '../../../application/query/get-ongoing-trials.interface';
 import { GetOngoingTrialsQuery } from '../../../application/query/get-ongoing-trials.query';
 
 export function makeGetOngoingTrialsExpressRouter<MappedTrial>(
-  handler: IGetOngoingTrialsHandler<MappedTrial>,
+  handler: GetOngoingTrials<MappedTrial>,
   mapper: TrialMapper<MappedTrial>,
 ) {
   const getOngoingTrialsRouter = Router();

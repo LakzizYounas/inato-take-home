@@ -1,12 +1,12 @@
 import { program } from 'commander';
 
 import { TrialMapper } from '../../../../../domain/models/trials/trial-mapper.type';
-import { IGetOngoingTrialsHandler } from '../../../application/query/get-ongoing-trials.handler.interface';
+import { GetOngoingTrials } from '../../../application/query/get-ongoing-trials.interface';
 import { GetOngoingTrialsQuery } from '../../../application/query/get-ongoing-trials.query';
 import { Logger } from '../../gateway/logger/logger.interface';
 
 export function makeGetOngoingTrialsCommander(
-  handler: IGetOngoingTrialsHandler<string>,
+  handler: GetOngoingTrials<string>,
   mapper: TrialMapper<string>,
   logger: Logger,
   programArguments: string[],

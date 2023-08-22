@@ -1,6 +1,6 @@
 import { GetOngoingTrialsQuery } from './get-ongoing-trials.query';
 
-export interface IGetOngoingTrialsHandler<MappedTrial> {
+export interface GetOngoingTrials<MappedTrial> {
   execute({
     sponsor,
     country,
